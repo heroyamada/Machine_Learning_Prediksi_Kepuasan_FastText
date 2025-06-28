@@ -52,11 +52,11 @@ Aktifkan Lingkungan Virtual:
 Sebelum Anda menginstal paket (seperti fasttext) atau menjalankan skrip Python Anda di lingkungan ini, Anda harus mengaktifkannya.
 
 
-Windows (Command Prompt): .venv_fasttext_py311\Scripts\activate
+- Windows (Command Prompt): .venv_fasttext_py311\Scripts\activate
 
-Windows (PowerShell): .\venv_fasttext_py311\Scripts\Activate.ps1
+- Windows (PowerShell): .\venv_fasttext_py311\Scripts\Activate.ps1
 
-macOS/Linux: source venv_fasttext_py311/bin/activate
+- macOS/Linux: source venv_fasttext_py311/bin/activate
 
 Setelah diaktifkan, Anda akan melihat (venv_fasttext_py311) di awal baris perintah terminal Anda.
 
