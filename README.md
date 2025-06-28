@@ -38,7 +38,7 @@ Setelah Anda berada di dalam folder proyek Anda, jalankan perintah ini:
 
 Bash
 
-python3.11 -m venv venv_fasttext_py311 --jalankan perintah ini di cmd
+python3.11 -m venv venv_fasttext_py311 (--jalankan perintah ini di cmd)
 
 python3.11: Memanggil interpreter Python versi 3.11.
 -m venv: Memberi tahu Python untuk menjalankan modul venv (yang khusus untuk membuat lingkungan virtual).
