@@ -1,6 +1,6 @@
 # Machine_Learning_Prediksi_Kepuasan_FastText
 link model FastText : https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.id.300.vec.gz
-letakan pada folder yang sama dengan python app.py dan train_model.py
+letakan file cc.id.300.vec pada folder yang sama dengan python app.py dan train_model.py
 
 aplikasi ini wajib dijalankan di python versi 3.11, jika anda mempunyai python versi lebih tinggi maka anda harus menjalankanya di virtual environment, langkahnya seperti ini :
 
