@@ -24,6 +24,7 @@ Cara Memverifikasi: Setelah instalasi, buka terminal atau command prompt dan ket
 Bash
 
 python3.11 --version
+
 Anda akan melihat output seperti Python 3.11.x. Jika tidak, berarti Python 3.11 belum terinstal atau tidak dikenali di PATH Anda.
 
 2. Pustaka fasttext (Akan Diinstal Setelah Lingkungan Virtual Dibuat)
@@ -36,15 +37,21 @@ Tekan Enter setelah mengetik perintah cd. Pastikan Anda berada di direktori yang
 Setelah Anda berada di dalam folder proyek Anda, jalankan perintah ini:
 
 Bash
-python3.11 -m venv venv_fasttext_py311
+
+python3.11 -m venv venv_fasttext_py311 --jalankan perintah ini di cmd
+
 python3.11: Memanggil interpreter Python versi 3.11.
 -m venv: Memberi tahu Python untuk menjalankan modul venv (yang khusus untuk membuat lingkungan virtual).
 venv_fasttext_py311: Ini adalah nama folder yang akan dibuat untuk lingkungan virtual Anda. Anda bisa memberinya nama apa pun, tetapi venv_fasttext_py311 jelas menunjukkan tujuannya.
 Tekan Enter. Proses ini mungkin memakan waktu beberapa detik. Tidak akan ada banyak output di terminal, tetapi Anda akan melihat kursor kembali.
 
 Setelah folder venv_fasttext_py311 muncul, Anda perlu melakukan dua hal penting:
+
+
 Aktifkan Lingkungan Virtual:
 Sebelum Anda menginstal paket (seperti fasttext) atau menjalankan skrip Python Anda di lingkungan ini, Anda harus mengaktifkannya.
+
+
 Windows (Command Prompt): .venv_fasttext_py311\Scripts\activate
 
 Windows (PowerShell): .\venv_fasttext_py311\Scripts\Activate.ps1
