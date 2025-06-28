@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Kepuasan Pelanggan E-Commerce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #27548A;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 40px 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Gaya untuk Flash Messages */
+        .flash-message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #333; /* Default text color */
+        }
+        .flash-message p {
+            margin: 5px 0;
+        }
+        .flash-message strong {
+            font-weight: bold;
+        }
+
+        /* Kategori Flash Messages - Mengatur background dan border berdasarkan sentimen */
+        .flash-message.positif {
+            background-color: #e9f7ef; /* Light green */
+            border-left: 5px solid #28a745; /* Green */
+        }
+        .flash-message.negatif {
+            background-color: #f8d7da; /* Light red */
+            border-left: 5px solid #dc3545; /* Red */
+        }
+        /* Styling untuk label prediksi (warna teks) di dalam flash message */
+        .flash-message .prediction-label.positif {
+            color: #28a745; /* Green */
+        }
+        .flash-message .prediction-label.negatif {
+            color: #dc3545; /* Red */
+        }
+        /* Styling untuk pesan error */
+        .flash-message.error {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            color: #dc3545; /* Text color for error messages */
+            font-weight: bold;
+        }
+
+
+        /* Gaya untuk tabel riwayat */
+        .history-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+        .history-container h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .action-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .action-button:hover {
+            background-color: #c82333;
+        }
+
+        /* Gaya untuk Paginasi */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+            flex-wrap: wrap; /* <-- PERBAIKAN DI SINI: Elemen akan wrap ke baris baru */
+        }
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        .pagination .disabled {
+            background-color: #f2f2f2;
+            color: #ccc;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        /* Gaya untuk Footer */
+        footer {
+            background-color: #F3F3E0;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        footer p:first-of-type {
+            font-weight: bold;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1>Prediksi Kepuasan Pelanggan E-Commerce</h1>
+            <form action="/predict" method="post">
+                <label for="review_text">Masukkan Ulasan Produk:</label>
+                <textarea id="review_text" name="review_text" placeholder="Contoh: Barang bagus, pengiriman cepat sekali, sangat puas!" required></textarea>
+                <button type="submit">Prediksi Kepuasan</button>
+            </form>
+
+            {# Tampilkan Flash Messages di sini #}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages-group">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message | safe }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+        </div>
+
+        <div class="history-container">
+            <h2>Riwayat Ulasan dan Prediksi</h2>
+            {% if reviews_history %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Ulasan</th>
+                            <th>Prediksi</th>
+                            <th>Waktu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for review in reviews_history %}
+                            <tr>
+                                <td>{{ (current_page - 1) * 4 + loop.index }}</td>
+                                <td>{{ review.review_text }}</td>
+                                <td class="prediction-label {% if review.prediction == 'Positif' %}positif{% elif review.prediction == 'Negatif' %}negatif{% else %}unknown{% endif %}">
+                                    {{ review.prediction }}
+                                </td>
+                                <td>{{ review.timestamp }}</td>
+                                <td>
+                                    <form action="/delete_review/{{ review.id }}?current_page={{ current_page }}" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus ulasan ini?');">
+                                        <button type="submit" class="action-button">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="pagination">
+                    {# Tombol Previous #}
+                    {% if current_page > 1 %}
+                        <a href="{{ url_for('index', page=current_page - 1) }}">Previous</a>
+                    {% else %}
+                        <span class="disabled">Previous</span>
+                    {% endif %}
+
+                    {# Logika untuk menampilkan beberapa halaman saja (bukan semua) #}
+                    {% set num_pages_to_show = 5 %} {# Atur berapa banyak nomor halaman yang ingin ditampilkan #}
+                    {% set start_page = (current_page - (num_pages_to_show // 2)) | int %}
+                    {% set end_page = (current_page + (num_pages_to_show // 2)) | int %}
+
+                    {% if start_page < 1 %}
+                        {% set start_page = 1 %}
+                        {% set end_page = num_pages_to_show %}
+                    {% endif %}
+                    {% if end_page > total_pages %}
+                        {% set end_page = total_pages %}
+                        {% set start_page = total_pages - num_pages_to_show + 1 %}
+                        {% if start_page < 1 %}{% set start_page = 1 %}{% endif %}
+                    {% endif %}
+
+                    {# Tampilkan halaman pertama (jika tidak di dekat start_page) #}
+                    {% if start_page > 1 %}
+                        <a href="{{ url_for('index', page=1) }}">1</a>
+                        {% if start_page > 2 %}
+                            <span class="disabled">...</span>
+                        {% endif %}
+                    {% endif %}
+
+                    {# Tampilkan nomor halaman di sekitar halaman saat ini #}
+                    {% for p in range(start_page, end_page + 1) %}
+                        {% if p == current_page %}
+                            <span class="active">{{ p }}</span>
+                        {% else %}
+                            <a href="{{ url_for('index', page=p) }}">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {# Tampilkan halaman terakhir (jika tidak di dekat end_page) #}
+                    {% if end_page < total_pages %}
+                        {% if end_page < total_pages - 1 %}
+                            <span class="disabled">...</span>
+                        {% endif %}
+                        <a href="{{ url_for('index', page=total_pages) }}">{{ total_pages }}</a>
+                    {% endif %}
+
+                    {# Tombol Next #}
+                    {% if current_page < total_pages %}
+                        <a href="{{ url_for('index', page=current_page + 1) }}">Next</a>
+                    {% else %}
+                        <span class="disabled">Next</span>
+                    {% endif %}
+                </div>
+
+            {% else %}
+                <p>Belum ada riwayat ulasan.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Kelompok 6 :</strong></p>
+        <p>Yuda Fuji Hermansyah</p>
+        <p>Muhammad Raihan Naufal</p>
+        <p>Wafiq Febrian Prayitno</p>
+        <p>Yudhistira Mahendra Herianto</p>
+        <p>Jatisari Camp &copy; 2025</p>
+    </footer>
+</body>
+</html>
